@@ -1,7 +1,6 @@
 package com.test.randomuser.ui.adapter;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -73,10 +72,11 @@ public class RandomListAdpater extends RecyclerView.Adapter<RandomListAdpater.My
         public void render(Result result, Integer position) {
             mRandomUserItemBinding.email.setText(result.getEmail());
             mRandomUserItemBinding.name.setText(result.getFullName(result.getName()));
-            Glide.with(mRandomUserItemBinding.getRoot()).load(result.getPicture().thumbnail);
+            Glide.with(mRandomUserItemBinding.getRoot())
+                    .load(result.getPicture().getThumbnail())
+                    .into(mRandomUserItemBinding.imageView);
             mRandomUserItemBinding.getRoot().setOnClickListener(v -> {
                 mListener.onItemClick(position, result);
-
             });
         }
     }
