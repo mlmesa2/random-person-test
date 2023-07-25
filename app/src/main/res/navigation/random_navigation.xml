@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/random_navigation"
+    app:startDestination="@id/randomListFragment">
+
+    <fragment
+        android:id="@+id/randomListFragment"
+        android:name="com.test.randomuser.ui.RandomListFragment"
+        android:label="Lista Random"
+        tools:layout="@layout/fragment_random_list" >
+        <action
+            android:id="@+id/action_randomListFragment_to_randomDetailFragment"
+            app:destination="@id/randomDetailFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/randomDetailFragment"
+        android:name="com.test.randomuser.ui.RandomDetailFragment"
+        android:label="Detalles"
+        tools:layout="@layout/fragment_random_detail" />
+</navigation>
