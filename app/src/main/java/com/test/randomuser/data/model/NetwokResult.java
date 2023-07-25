@@ -6,9 +6,11 @@ public class NetwokResult {
     public Data data;
     public String errorMessage;
 
-    public NetwokResult(Data data) {
+    public NetwokResult(Data data, String errorMessage) {
         this.data = data;
+        this.errorMessage = errorMessage;
     }
+
     public NetwokResult(String errorMessage) {
         this.errorMessage = errorMessage;
     }
@@ -32,19 +34,19 @@ public class NetwokResult {
     }
 
     public static class Data{
-        public List<Result> result;
+        public List<RandomPerson> result;
         public Info info;
 
-        public Data(List<Result> result, Info info) {
+        public Data(List<RandomPerson> result, Info info) {
             this.result = result;
             this.info = info;
         }
 
-        public List<Result> getListResult() {
+        public List<RandomPerson> getListResult() {
             return result;
         }
 
-        public void setListResult(List<Result> result) {
+        public void setListResult(List<RandomPerson> result) {
             this.result = result;
         }
 
