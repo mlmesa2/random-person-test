@@ -8,15 +8,15 @@
     <fragment
         android:id="@+id/randomListFragment"
         android:name="com.test.randomuser.ui.RandomListFragment"
-        android:label="fragment_random_list"
+        android:label="Lista Random"
         tools:layout="@layout/fragment_random_list" >
         <action
             android:id="@+id/action_randomListFragment_to_randomDetailFragment"
             app:destination="@id/randomDetailFragment" />
     </fragment>
-    <fragment
+    <dialog
         android:id="@+id/randomDetailFragment"
         android:name="com.test.randomuser.ui.RandomDetailFragment"
-        android:label="fragment_random_detail"
+        android:label="Detalles"
         tools:layout="@layout/fragment_random_detail" />
 </navigation>

@@ -7,37 +7,41 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
+
+import com.test.randomuser.data.model.Info;
 import com.test.randomuser.data.model.NetwokResult;
+import com.test.randomuser.data.model.Root;
 import com.test.randomuser.data.repository.RandomPersonRepositoryImpl;
 import com.test.randomuser.ui.state.ListState;
+
+import java.util.Collections;
+
 import javax.inject.Inject;
 import dagger.hilt.android.lifecycle.HiltViewModel;
+import io.reactivex.Observer;
+import io.reactivex.disposables.CompositeDisposable;
+import io.reactivex.disposables.Disposable;
 
 @HiltViewModel
 public class RandomListViewModel extends ViewModel {
-    RandomPersonRepositoryImpl mRepository;
-
-
-    MutableLiveData<NetwokResult> listMutableLiveData;
+    private RandomPersonRepositoryImpl mRepository;
+    private CompositeDisposable compositeDisposable;
 
     private final MutableLiveData<ListState>  listState = new MutableLiveData<ListState>(
-            new ListState( null, null, true, null)
+            new ListState( null, null, false, null)
             );
 
     public LiveData<ListState> getListState() {
         return listState;
     }
 
-    /*@Inject
-    RandomPersonRepositoryImpl repository;
-*/
     @Inject
     public RandomListViewModel(RandomPersonRepositoryImpl repository) {
-        //listMutableLiveData = new MutableLiveData<>();
         mRepository = repository;
+        compositeDisposable = new CompositeDisposable();
     }
 
-    public void getAllRandomUsers(Integer page, Integer size, String seed) {
+    public void getRandomUsers(int page, int pageSize, String seed) {
         listState.setValue(new ListState(
                         null,
                         "",
@@ -45,25 +49,67 @@ public class RandomListViewModel extends ViewModel {
                         null
                 )
         );
-        NetwokResult result = mRepository.getRamdomUserList(page, size, seed);
-        if (result.errorMessage == null) {
-            //Log.d(TAG, "getAllRandomUsers: THIS IS THE RESULT:" + result.data.result);
-            listState.setValue(new ListState(
-                            result.data.result,
-                            "",
-                            false,
-                            result.data.info
-                    )
-            );
-            //listMutableLiveData.postValue(new NetwokResult(result.data));
-        } else {
-            listState.setValue(new ListState(
-                    null,
-                    result.errorMessage,
-                    false,
-                    null
-            ));
-            listMutableLiveData.postValue(new NetwokResult(result.errorMessage));
-        }
+        NetwokResult result = new NetwokResult(
+                new NetwokResult.Data(Collections.emptyList(), new Info("",0,0,"")),
+                ""
+        );
+
+        mRepository.getRamdomUserList(page, pageSize, seed)
+                .subscribe(new Observer<Root>() {
+                    @Override
+                    public void onSubscribe(Disposable d) {
+                        Log.d(TAG, "onSubscribe: " + d);
+                    }
+
+                    @Override
+                    public void onNext(Root root) {
+                        Log.d(TAG, "onNext: ON NEXT");
+                        if (root.getResults() != null) {
+                            Log.d(TAG, "onNext: " + root.getResults().get(0).getName().getFirst());
+
+                            result.getData().setListResult(root.getResults());
+                            result.getData().setInfo(root.getInfo());
+                            result.setErrorMessage("");
+
+                            listState.setValue(new ListState(
+                                    result.getData().getListResult(),
+                                    "",
+                                    false,
+                                    result.getData().getInfo()
+                            ));
+                        } else {
+                            result.setErrorMessage("Error leyendo los datos");
+                            listState.setValue(new ListState(
+                                    null,
+                                    result.errorMessage,
+                                    false,
+                                    null
+                            ));
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        Log.d(TAG, "onError: " + e);
+                        listState.setValue(new ListState(
+                                null,
+                                "Error leyendo los datos:" + e.getMessage(),
+                                false,
+                                null
+                        ));
+                    }
+
+                    @Override
+                    public void onComplete() {
+                        Log.d(TAG, "onComplete: Complete DATA LOAD");
+                    }
+                });
+    }
+
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        compositeDisposable.dispose();
     }
 }
