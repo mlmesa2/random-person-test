@@ -1,9 +1,6 @@
 package com.test.randomuser.ui;
 
-import static com.test.randomuser.Util.TAG;
-
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -68,7 +65,6 @@ public class RandomDetailFragment extends BottomSheetDialogFragment {
         binding.locationText.setText(location);
         Glide.with(binding.getRoot()).load(picture).into(binding.imageProfile);
         binding.dateText.setText(getFormatDate(date));
-        Log.d(TAG, "updateUi: " + date  +" *** "+ getFormatDate(date));
     }
 
     private String getFormatDate(String day) {

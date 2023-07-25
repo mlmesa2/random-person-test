@@ -63,9 +63,7 @@ public class RandomListViewModel extends ViewModel {
 
                     @Override
                     public void onNext(Root root) {
-                        Log.d(TAG, "onNext: ON NEXT");
                         if (root.getResults() != null) {
-                            Log.d(TAG, "onNext: " + root.getResults().get(0).getName().getFirst());
 
                             result.getData().setListResult(root.getResults());
                             result.getData().setInfo(root.getInfo());
