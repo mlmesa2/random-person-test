@@ -6,6 +6,13 @@ public class Info{
         public int page;
         public String version;
 
+    public Info(String seed, int results, int page, String version) {
+        this.seed = seed;
+        this.results = results;
+        this.page = page;
+        this.version = version;
+    }
+
     public Info() {
     }
 

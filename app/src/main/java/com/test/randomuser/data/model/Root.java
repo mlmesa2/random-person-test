@@ -3,17 +3,22 @@ package com.test.randomuser.data.model;
 import java.util.List;
 
 public class Root{
-        public List<Result> results;
+        public List<RandomPerson> results;
         public Info info;
+
+    public Root(List<RandomPerson> results, Info info) {
+        this.results = results;
+        this.info = info;
+    }
 
     public Root() {
     }
 
-    public List<Result> getResults() {
+    public List<RandomPerson> getResults() {
         return results;
     }
 
-    public void setResults(List<Result> results) {
+    public void setResults(List<RandomPerson> results) {
         this.results = results;
     }
 

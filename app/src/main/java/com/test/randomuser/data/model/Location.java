@@ -5,9 +5,17 @@ public class Location{
         public String city;
         public String state;
         public String country;
-        public int postcode;
         public Coordinates coordinates;
         public Timezone timezone;
+
+        public Location(Street street, String city, String state, String country, Coordinates coordinates, Timezone timezone) {
+                this.street = street;
+                this.city = city;
+                this.state = state;
+                this.country = country;
+                this.coordinates = coordinates;
+                this.timezone = timezone;
+        }
 
         public Location() {
         }
@@ -42,14 +50,6 @@ public class Location{
 
         public void setCountry(String country) {
                 this.country = country;
-        }
-
-        public int getPostcode() {
-                return postcode;
-        }
-
-        public void setPostcode(int postcode) {
-                this.postcode = postcode;
         }
 
         public Coordinates getCoordinates() {

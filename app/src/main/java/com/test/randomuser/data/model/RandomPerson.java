@@ -3,7 +3,7 @@ package com.test.randomuser.data.model;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 
-public class Result {
+public class RandomPerson {
     public String gender;
     public Name name;
     public Location location;
@@ -15,10 +15,10 @@ public class Result {
     public Picture picture;
 
 
-    public Result() {
+    public RandomPerson() {
     }
 
-    public Result(String gender, Name name, Location location, String email, Registered registered, String phone, String cell, Id id, Picture picture) {
+    public RandomPerson(String gender, Name name, Location location, String email, Registered registered, String phone, String cell, Id id, Picture picture) {
         this.gender = gender;
         this.name = name;
         this.location = location;
@@ -102,18 +102,18 @@ public class Result {
         this.picture = picture;
     }
 
-    public String getFullName(Name name) {
-        return name.first + name.last;
+    public String getFullName() {
+        return this.name.title + " " + this.name.getFirst() + " " + this.name.last;
     }
 
-    public static DiffUtil.ItemCallback<Result> DIFF_CALLBACK = new DiffUtil.ItemCallback<Result>() {
+    public static DiffUtil.ItemCallback<RandomPerson> DIFF_CALLBACK = new DiffUtil.ItemCallback<RandomPerson>() {
         @Override
-        public boolean areItemsTheSame(@NonNull Result oldItem, @NonNull Result newItem) {
+        public boolean areItemsTheSame(@NonNull RandomPerson oldItem, @NonNull RandomPerson newItem) {
             return oldItem.id == newItem.id;
         }
 
         @Override
-        public boolean areContentsTheSame(@NonNull Result oldItem, @NonNull Result newItem) {
+        public boolean areContentsTheSame(@NonNull RandomPerson oldItem, @NonNull RandomPerson newItem) {
             return oldItem.equals(newItem);
         }
     };
@@ -123,7 +123,7 @@ public class Result {
         if (obj == this)
             return true;
 
-        Result result = (Result) obj;
+        RandomPerson result = (RandomPerson) obj;
         return result.id == this.id;
     }
 }
